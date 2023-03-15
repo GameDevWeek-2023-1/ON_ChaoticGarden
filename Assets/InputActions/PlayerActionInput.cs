@@ -55,10 +55,19 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""SeedsSwitch"",
+                    ""name"": ""SeedsSwitchPC"",
                     ""type"": ""Value"",
                     ""id"": ""d7052ba7-3863-4227-b912-1877c9719169"",
                     ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SeedsSwitchGamePad"",
+                    ""type"": ""Button"",
+                    ""id"": ""05a77dcb-2dfc-4c3d-b545-42dd3d9acf5a"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -255,18 +264,7 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SeedsSwitch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""469b1f0b-6e2c-4eb3-944f-a14f989159aa"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SeedsSwitch"",
+                    ""action"": ""SeedsSwitchPC"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -306,11 +304,22 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fcf75283-f564-47fa-aad5-a478a66ff3be"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ForwardWeather"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72040251-f631-4303-8d45-d9cc826e97bf"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SeedsSwitchGamePad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -324,7 +333,8 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Planting = m_Player.FindAction("Planting", throwIfNotFound: true);
-        m_Player_SeedsSwitch = m_Player.FindAction("SeedsSwitch", throwIfNotFound: true);
+        m_Player_SeedsSwitchPC = m_Player.FindAction("SeedsSwitchPC", throwIfNotFound: true);
+        m_Player_SeedsSwitchGamePad = m_Player.FindAction("SeedsSwitchGamePad", throwIfNotFound: true);
         m_Player_RevertWeather = m_Player.FindAction("RevertWeather", throwIfNotFound: true);
         m_Player_ForwardWeather = m_Player.FindAction("ForwardWeather", throwIfNotFound: true);
     }
@@ -391,7 +401,8 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Planting;
-    private readonly InputAction m_Player_SeedsSwitch;
+    private readonly InputAction m_Player_SeedsSwitchPC;
+    private readonly InputAction m_Player_SeedsSwitchGamePad;
     private readonly InputAction m_Player_RevertWeather;
     private readonly InputAction m_Player_ForwardWeather;
     public struct PlayerActions
@@ -401,7 +412,8 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Planting => m_Wrapper.m_Player_Planting;
-        public InputAction @SeedsSwitch => m_Wrapper.m_Player_SeedsSwitch;
+        public InputAction @SeedsSwitchPC => m_Wrapper.m_Player_SeedsSwitchPC;
+        public InputAction @SeedsSwitchGamePad => m_Wrapper.m_Player_SeedsSwitchGamePad;
         public InputAction @RevertWeather => m_Wrapper.m_Player_RevertWeather;
         public InputAction @ForwardWeather => m_Wrapper.m_Player_ForwardWeather;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -422,9 +434,12 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
             @Planting.started += instance.OnPlanting;
             @Planting.performed += instance.OnPlanting;
             @Planting.canceled += instance.OnPlanting;
-            @SeedsSwitch.started += instance.OnSeedsSwitch;
-            @SeedsSwitch.performed += instance.OnSeedsSwitch;
-            @SeedsSwitch.canceled += instance.OnSeedsSwitch;
+            @SeedsSwitchPC.started += instance.OnSeedsSwitchPC;
+            @SeedsSwitchPC.performed += instance.OnSeedsSwitchPC;
+            @SeedsSwitchPC.canceled += instance.OnSeedsSwitchPC;
+            @SeedsSwitchGamePad.started += instance.OnSeedsSwitchGamePad;
+            @SeedsSwitchGamePad.performed += instance.OnSeedsSwitchGamePad;
+            @SeedsSwitchGamePad.canceled += instance.OnSeedsSwitchGamePad;
             @RevertWeather.started += instance.OnRevertWeather;
             @RevertWeather.performed += instance.OnRevertWeather;
             @RevertWeather.canceled += instance.OnRevertWeather;
@@ -444,9 +459,12 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
             @Planting.started -= instance.OnPlanting;
             @Planting.performed -= instance.OnPlanting;
             @Planting.canceled -= instance.OnPlanting;
-            @SeedsSwitch.started -= instance.OnSeedsSwitch;
-            @SeedsSwitch.performed -= instance.OnSeedsSwitch;
-            @SeedsSwitch.canceled -= instance.OnSeedsSwitch;
+            @SeedsSwitchPC.started -= instance.OnSeedsSwitchPC;
+            @SeedsSwitchPC.performed -= instance.OnSeedsSwitchPC;
+            @SeedsSwitchPC.canceled -= instance.OnSeedsSwitchPC;
+            @SeedsSwitchGamePad.started -= instance.OnSeedsSwitchGamePad;
+            @SeedsSwitchGamePad.performed -= instance.OnSeedsSwitchGamePad;
+            @SeedsSwitchGamePad.canceled -= instance.OnSeedsSwitchGamePad;
             @RevertWeather.started -= instance.OnRevertWeather;
             @RevertWeather.performed -= instance.OnRevertWeather;
             @RevertWeather.canceled -= instance.OnRevertWeather;
@@ -475,7 +493,8 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnPlanting(InputAction.CallbackContext context);
-        void OnSeedsSwitch(InputAction.CallbackContext context);
+        void OnSeedsSwitchPC(InputAction.CallbackContext context);
+        void OnSeedsSwitchGamePad(InputAction.CallbackContext context);
         void OnRevertWeather(InputAction.CallbackContext context);
         void OnForwardWeather(InputAction.CallbackContext context);
     }

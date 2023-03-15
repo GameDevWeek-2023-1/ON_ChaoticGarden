@@ -33,10 +33,19 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "SeedsSwitch",
+                    "name": "SeedsSwitchPC",
                     "type": "Value",
                     "id": "d7052ba7-3863-4227-b912-1877c9719169",
                     "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SeedsSwitchGamePad",
+                    "type": "Button",
+                    "id": "05a77dcb-2dfc-4c3d-b545-42dd3d9acf5a",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -233,18 +242,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SeedsSwitch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "469b1f0b-6e2c-4eb3-944f-a14f989159aa",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SeedsSwitch",
+                    "action": "SeedsSwitchPC",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -284,11 +282,22 @@
                 {
                     "name": "",
                     "id": "fcf75283-f564-47fa-aad5-a478a66ff3be",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ForwardWeather",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72040251-f631-4303-8d45-d9cc826e97bf",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SeedsSwitchGamePad",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

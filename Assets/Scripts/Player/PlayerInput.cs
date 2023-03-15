@@ -23,7 +23,8 @@ public class PlayerInput : MonoBehaviour
     private void Start()
     {
         _playerActionInput.Player.Planting.performed += PlayerInput_Planting_performed;
-        _playerActionInput.Player.SeedsSwitch.performed += PlayerInput_SeedsSwitch_performed;
+        _playerActionInput.Player.SeedsSwitchPC.performed += PlayerInput_SeedsSwitchPC_performed;
+        _playerActionInput.Player.SeedsSwitchGamePad.performed += PlayerInput_SeedsSwitchGamePad_performed;
         _playerActionInput.Player.Attack.performed += PlayerInput_Attack_performed;
         _playerActionInput.Player.RevertWeather.performed += PlayerInput_RevertWeather_performed;
         _playerActionInput.Player.ForwardWeather.performed += PlayerInpu_ForwardWeather_performed;
@@ -40,7 +41,7 @@ public class PlayerInput : MonoBehaviour
     {
         Debug.Log("Attack");
     }
-    private void PlayerInput_SeedsSwitch_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void PlayerInput_SeedsSwitchPC_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         //Scroll Wheel => Value & Any => Scroll/Y [Mouse]
         float y = obj.ReadValue<float>();
@@ -48,6 +49,10 @@ public class PlayerInput : MonoBehaviour
         {
             OnSamenSwitched?.Invoke(this, EventArgs.Empty);
         }
+    }
+    private void PlayerInput_SeedsSwitchGamePad_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnSamenSwitched?.Invoke(this, EventArgs.Empty);
     }
     private void PlayerInput_Planting_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
