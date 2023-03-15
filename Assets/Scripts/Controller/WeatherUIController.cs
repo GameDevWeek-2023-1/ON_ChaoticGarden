@@ -11,13 +11,19 @@ public class WeatherUIController : MonoBehaviour
     [SerializeField] private Sprite rainyWeatherImage;
     [SerializeField] private Sprite stormyWeatherImage;
     [SerializeField] private Sprite normalWeatherImage;
+    [SerializeField] private Animator animator;
     private void Start()
     {
         WeatherController.Instance.OnWeatherChanged += WeatherController_OnWeatherChanged;
         WeatherController.Instance.OnCurrentWeatherChanged += WeatherController_OnCurrentWeatherChanged;
+        WeatherController.Instance.OnTimeBeforeWeatherChange += WeatherController_OnTimeBeforeWeatherChange;
 
         UpdateWeatherUiHolder(WeatherController.Instance.GetWeatherList());
         UpdateCurrentWeatherImage();
+    }
+    private void WeatherController_OnTimeBeforeWeatherChange(object sender, System.EventArgs e)
+    {
+        animator.SetTrigger("SwitchWeather");
     }
     private void WeatherController_OnCurrentWeatherChanged(object sender, System.EventArgs e)
     {
@@ -54,8 +60,9 @@ public class WeatherUIController : MonoBehaviour
     }
     private void UpdateCurrentWeatherImage()
     {
-        int currentWeatherIndex = WeatherController.Instance.GetCurrentWeatherIndex() - 1;
-        Debug.Log(currentWeatherIndex);
+        int currentWeatherIndex = WeatherController.Instance.GetCurrentWeatherIndex();
+
+        if (currentWeatherIndex > currentWeatherImages.Length - 1) return; 
 
         foreach (Image currentWeatherImage in currentWeatherImages)
         {

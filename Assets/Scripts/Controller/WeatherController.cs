@@ -6,8 +6,9 @@ using UnityEngine;
 public class WeatherController : MonoBehaviour
 {
     public static WeatherController Instance { get; private set; }
-    public event EventHandler<List<Weather>> OnWeatherChanged;
     public event EventHandler OnCurrentWeatherChanged;
+    public event EventHandler<List<Weather>> OnWeatherChanged;
+    public event EventHandler OnTimeBeforeWeatherChange;
     public enum Weather
     {
         Normal,
@@ -17,14 +18,17 @@ public class WeatherController : MonoBehaviour
     }
 
     [SerializeField] private float maxChangeWeatherTime;
+    [SerializeField] private float minChangeWeatherTime;
+    [SerializeField] private float resetDelayTime;
     [SerializeField] private int weatherTypeCount;
     [SerializeField] private ParticleSystem normalWeatherParticleSystem;
     [SerializeField] private ParticleSystem rainyWeatherParticleSystem;
     [SerializeField] private ParticleSystem stormyWeatherParticleSystem;
+    [SerializeField] private List<Weather> weatherList = new List<Weather>();
 
-    public List<Weather> weatherList = new List<Weather>();
     private Weather _currentWeather;
     private float _changeWeatherTime;
+    private float _backUpChangeWeatherTime;
     private int _currentWeatherIndex = 0;
     private void Awake()
     {
@@ -41,8 +45,10 @@ public class WeatherController : MonoBehaviour
     {
         if(_changeWeatherTime <= 0f)
         {
-            ChangeWeather();
+            if (_currentWeatherIndex > weatherList.Count - 1) return;
+
             OnCurrentWeatherChanged?.Invoke(this, EventArgs.Empty);
+            ChangeWeather();
         }
         else
         {
@@ -54,17 +60,23 @@ public class WeatherController : MonoBehaviour
         _currentWeather = weatherList[_currentWeatherIndex];
         _currentWeatherIndex++;
 
-        if(_currentWeatherIndex > weatherList.Count - 1)
+        _changeWeatherTime = UnityEngine.Random.Range(minChangeWeatherTime, maxChangeWeatherTime);
+        _backUpChangeWeatherTime = _changeWeatherTime;
+
+        if (_currentWeatherIndex > weatherList.Count - 1)
         {
             FunctionTimer.Create(() =>
             {
-                SetRandomWeather();
-                _currentWeatherIndex = 0;
-                OnWeatherChanged?.Invoke(this, weatherList);
-            }, maxChangeWeatherTime);
-        }
+                OnTimeBeforeWeatherChange?.Invoke(this, EventArgs.Empty);
 
-        _changeWeatherTime = maxChangeWeatherTime;
+                FunctionTimer.Create(() =>
+                {
+                    SetRandomWeather();
+                    _currentWeatherIndex = 0;
+                    OnWeatherChanged?.Invoke(this, weatherList);
+                }, resetDelayTime);
+            }, _backUpChangeWeatherTime);
+        }
 
         switch (_currentWeather)
         {

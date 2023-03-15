@@ -66,6 +66,7 @@ MonoBehaviour:
   rainyWeatherImage: {fileID: 21300000, guid: 2a6434f80f7845b42a2b77aa2c4be8d7, type: 3}
   stormyWeatherImage: {fileID: 21300000, guid: 8f91edc60a4ae9c4e90581d7a96afc62, type: 3}
   normalWeatherImage: {fileID: 21300000, guid: 89bcf13c141853d4ab287fefc50628b2, type: 3}
+  animator: {fileID: 9054575014645772793}
 --- !u!1 &332536970255666737
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +389,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1600, y: 900}
+  m_ReferenceResolution: {x: 1280, y: 720}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
@@ -423,6 +424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3538039393662223317}
   - component: {fileID: 2738957898600698526}
+  - component: {fileID: 9054575014645772793}
   m_Layer: 5
   m_Name: WeatherUIHolder
   m_TagString: Untagged
@@ -481,6 +483,27 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!95 &9054575014645772793
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3019789443101643029}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 36ffa3adc068b664b84b911c9b9d3e21, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4003189597357797281
 GameObject:
   m_ObjectHideFlags: 0
