@@ -26,7 +26,6 @@ public class WeatherController : MonoBehaviour
     [SerializeField] private ParticleSystem rainyWeatherParticleSystem;
     [SerializeField] private ParticleSystem stormyWeatherParticleSystem;
     [SerializeField] private List<Weather> weatherList = new List<Weather>();
-    [SerializeField] private PlayerInput playerInput;
     [SerializeField] private MMF_Player Feel_Feedback_Lensdistortion;
 
     private Weather _currentWeather;
@@ -46,23 +45,15 @@ public class WeatherController : MonoBehaviour
     }
     private void Start()
     {
-        playerInput.OnWeatherForward += PlayerInput_OnWeatherForward;
-        //playerInput.OnWeatherRevert += PlayerInput_OnWeatherRevert;
+        TimeSkipController.Instance.OnTimeSkipped += TimeSkipController_OnWeatherForward;
     }
-    private void PlayerInput_OnWeatherForward(object sender, EventArgs e)
+    private void TimeSkipController_OnWeatherForward(object sender, EventArgs e)
     {
         if(_currentWeatherIndex > weatherList.Count - 1) return;
 
         _changeWeatherTime = 0f;
         Feel_Feedback_Lensdistortion?.PlayFeedbacks();
     }
-    //private void PlayerInput_OnWeatherRevert(object sender, EventArgs e)
-    //{
-    //    if (_currentWeatherIndex <= 0) return;
-
-    //    _currentWeatherIndex--;
-    //    _changeWeatherTime = 0f;
-    //}
     private void Update()
     {
         if(_changeWeatherTime <= 0f)
