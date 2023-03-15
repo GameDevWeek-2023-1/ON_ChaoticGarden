@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private PlayerInput _playerInput;
+    [SerializeField] private float plantingResetTime = 1f;
 
     private float _playerRadius;
     private bool _isWalking;
@@ -25,7 +26,6 @@ public class PlayerController : MonoBehaviour
     {
         _isPlantingSeed = true;
 
-        float plantingResetTime = 1f;
         FunctionTimer.Create(() =>
         {
             _isPlantingSeed = false;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
         float playerHight = 1f;
         float moveDistance = moveSpeed * Time.deltaTime;
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, _playerRadius, moveDir, moveDistance);
+        bool canMove = !Physics.CapsuleCast(transform.position + (Vector3.up * .3f), transform.position + Vector3.up * playerHight, _playerRadius, moveDir, moveDistance);
 
         //Wenn wir nicht bewegen können, weil wir gegen was laufen
         if (!canMove)
