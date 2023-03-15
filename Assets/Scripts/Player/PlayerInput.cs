@@ -7,6 +7,8 @@ public class PlayerInput : MonoBehaviour
 {
     public event EventHandler OnSamenPlanted;
     public event EventHandler OnSamenSwitched;
+    public event EventHandler OnWeatherRevert;
+    public event EventHandler OnWeatherForward;
 
     private PlayerActionInput _playerActionInput;
     private void OnEnable()
@@ -23,6 +25,16 @@ public class PlayerInput : MonoBehaviour
         _playerActionInput.Player.Planting.performed += PlayerInput_Planting_performed;
         _playerActionInput.Player.SeedsSwitch.performed += PlayerInput_SeedsSwitch_performed;
         _playerActionInput.Player.Attack.performed += PlayerInput_Attack_performed;
+        _playerActionInput.Player.RevertWeather.performed += PlayerInput_RevertWeather_performed;
+        _playerActionInput.Player.ForwardWeather.performed += PlayerInpu_ForwardWeather_performed;
+    }
+    private void PlayerInpu_ForwardWeather_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnWeatherForward?.Invoke(this, EventArgs.Empty);
+    }
+    private void PlayerInput_RevertWeather_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnWeatherRevert?.Invoke(this, EventArgs.Empty);
     }
     private void PlayerInput_Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
