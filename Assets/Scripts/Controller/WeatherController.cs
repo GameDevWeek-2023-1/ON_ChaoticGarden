@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeatherController : MonoBehaviour
 {
+    public static WeatherController Instance { get; private set; }
+    public event EventHandler<List<Weather>> OnWeatherChanged;
+    public event EventHandler OnCurrentWeatherChanged;
     public enum Weather
     {
         Normal,
@@ -11,6 +15,7 @@ public class WeatherController : MonoBehaviour
         Rainy,
         Sunny,
     }
+
     [SerializeField] private float maxChangeWeatherTime;
     [SerializeField] private int weatherTypeCount;
     [SerializeField] private ParticleSystem normalWeatherParticleSystem;
@@ -21,8 +26,15 @@ public class WeatherController : MonoBehaviour
     private Weather _currentWeather;
     private float _changeWeatherTime;
     private int _currentWeatherIndex = 0;
-    private void Start()
+    private void Awake()
     {
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         SetRandomWeather();
     }
     private void Update()
@@ -30,6 +42,7 @@ public class WeatherController : MonoBehaviour
         if(_changeWeatherTime <= 0f)
         {
             ChangeWeather();
+            OnCurrentWeatherChanged?.Invoke(this, EventArgs.Empty);
         }
         else
         {
@@ -39,17 +52,21 @@ public class WeatherController : MonoBehaviour
     private void ChangeWeather()
     {
         _currentWeather = weatherList[_currentWeatherIndex];
-
-        _changeWeatherTime = maxChangeWeatherTime;
         _currentWeatherIndex++;
 
         if(_currentWeatherIndex > weatherList.Count - 1)
         {
-            SetRandomWeather();
-            _currentWeatherIndex = 0;
+            FunctionTimer.Create(() =>
+            {
+                SetRandomWeather();
+                _currentWeatherIndex = 0;
+                OnWeatherChanged?.Invoke(this, weatherList);
+            }, maxChangeWeatherTime);
         }
 
-        switch(_currentWeather)
+        _changeWeatherTime = maxChangeWeatherTime;
+
+        switch (_currentWeather)
         {
             case Weather.Normal:
                 _currentWeather = Weather.Rainy;
@@ -82,7 +99,7 @@ public class WeatherController : MonoBehaviour
     {
         for (int i = 0; i < weatherTypeCount; i++)
         {
-            int randomWeather = Random.Range(0, 4);
+            int randomWeather = UnityEngine.Random.Range(0, 4);
             switch (randomWeather)
             {
                 case 0:
@@ -100,4 +117,6 @@ public class WeatherController : MonoBehaviour
             }
         }
     }
+    public List<Weather> GetWeatherList() => weatherList;
+    public int GetCurrentWeatherIndex() => _currentWeatherIndex;
 }

@@ -5,49 +5,63 @@ using UnityEngine.UI;
 
 public class WeatherUIController : MonoBehaviour
 {
-    [SerializeField] private RectTransform weatherUIHolder;
-    [SerializeField] private RectTransform sunnyWeatherImage;
-    [SerializeField] private RectTransform rainyWeatherImage;
-    [SerializeField] private RectTransform stormyWeatherImage;
-    [SerializeField] private RectTransform normalWeatherImage;
+    [SerializeField] private Image[] weatherHolderImages;
+    [SerializeField] private Image[] currentWeatherImages;
+    [SerializeField] private Sprite sunnyWeatherImage;
+    [SerializeField] private Sprite rainyWeatherImage;
+    [SerializeField] private Sprite stormyWeatherImage;
+    [SerializeField] private Sprite normalWeatherImage;
     private void Start()
     {
         WeatherController.Instance.OnWeatherChanged += WeatherController_OnWeatherChanged;
-        ResetWeatherUiHolder(WeatherController.Instance.GetWeatherList());
+        WeatherController.Instance.OnCurrentWeatherChanged += WeatherController_OnCurrentWeatherChanged;
+
+        UpdateWeatherUiHolder(WeatherController.Instance.GetWeatherList());
+        UpdateCurrentWeatherImage();
+    }
+    private void WeatherController_OnCurrentWeatherChanged(object sender, System.EventArgs e)
+    {
+        UpdateCurrentWeatherImage();
     }
     private void WeatherController_OnWeatherChanged(object sender, List<WeatherController.Weather> e)
     {
-        ResetWeatherUiHolder(e);
+        UpdateWeatherUiHolder(e);
     }
-    private void ResetWeatherUiHolder(List<WeatherController.Weather> weatherList)
+    private void UpdateWeatherUiHolder(List<WeatherController.Weather> weatherList)
     {
-        foreach (RectTransform weatherTransform in weatherUIHolder)
+        for (int i = 0; i < weatherList.Count; i++)
         {
-            Destroy(weatherTransform.gameObject);
-        }
-
-        foreach(WeatherController.Weather weather in weatherList)
-        {
-            switch(weather)
+            switch(weatherList[i])
             {
                 case WeatherController.Weather.Normal:
-                    SpawnUIWeather(normalWeatherImage);
-                    break;
-                case WeatherController.Weather.Sunny:
-                    SpawnUIWeather(sunnyWeatherImage);
-                    break;
-                case WeatherController.Weather.Rainy:
-                    SpawnUIWeather(rainyWeatherImage);
+                    ChangeWeatherSprite(normalWeatherImage, i);
                     break;
                 case WeatherController.Weather.Stormy:
-                    SpawnUIWeather(stormyWeatherImage);
+                    ChangeWeatherSprite(stormyWeatherImage, i);
+                    break;
+                case WeatherController.Weather.Sunny:
+                    ChangeWeatherSprite(sunnyWeatherImage, i);
+                    break;
+                case WeatherController.Weather.Rainy:
+                    ChangeWeatherSprite(rainyWeatherImage, i);
                     break;
             }
         }
     }
-    private void SpawnUIWeather(RectTransform spawnedTransform)
+    private void ChangeWeatherSprite(Sprite weatherSprite, int weatherHolderImageIndex)
     {
-        RectTransform uiObject = Instantiate(spawnedTransform, weatherUIHolder);
-        uiObject.SetParent(weatherUIHolder);
+        weatherHolderImages[weatherHolderImageIndex].sprite = weatherSprite;
+    }
+    private void UpdateCurrentWeatherImage()
+    {
+        int currentWeatherIndex = WeatherController.Instance.GetCurrentWeatherIndex() - 1;
+        Debug.Log(currentWeatherIndex);
+
+        foreach (Image currentWeatherImage in currentWeatherImages)
+        {
+            currentWeatherImage.gameObject.SetActive(false);
+        }
+
+        currentWeatherImages[currentWeatherIndex].gameObject.SetActive(true);
     }
 }
