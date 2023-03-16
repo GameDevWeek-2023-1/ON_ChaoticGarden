@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class TimeSkipController : MonoBehaviour
 {
+    private const float TIME_SKIP_TIME_MULTIPLIER = 1.2f;
     public static TimeSkipController Instance { get; private set; }
 
     public event EventHandler OnTimeSkipped;
@@ -15,6 +16,7 @@ public class TimeSkipController : MonoBehaviour
     [SerializeField] private float timeSkipResetTime;
 
     private bool _canTimeSkip = true;
+    private int _timeSkipCounter;
     private void Awake()
     {
         if(Instance != null)
@@ -34,8 +36,16 @@ public class TimeSkipController : MonoBehaviour
         if (!_canTimeSkip) return;
 
         _canTimeSkip = false;
+        _timeSkipCounter++;
         timeSkipOverlayImage.gameObject.SetActive(true);
         OnTimeSkipped?.Invoke(this, EventArgs.Empty);
+
+        //Je öffter man ihn benutzt, desto größerer Cooldown
+        if(_timeSkipCounter >= 3)
+        {
+            timeSkipResetTime = (timeSkipResetTime * TIME_SKIP_TIME_MULTIPLIER);
+        }
+
         FunctionTimer.Create(() =>
         {
             _canTimeSkip = true;

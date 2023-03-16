@@ -89,6 +89,15 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""58e83aec-5f28-4883-8d5f-fef08955529f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -322,6 +331,28 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
                     ""action"": ""SeedsSwitchGamePad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""31a8cd71-7afb-40e0-ba0c-8f1751d24ee2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""252bc298-cb0b-4485-9bfc-644ddee7ec80"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -337,6 +368,7 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         m_Player_SeedsSwitchGamePad = m_Player.FindAction("SeedsSwitchGamePad", throwIfNotFound: true);
         m_Player_RevertWeather = m_Player.FindAction("RevertWeather", throwIfNotFound: true);
         m_Player_ForwardWeather = m_Player.FindAction("ForwardWeather", throwIfNotFound: true);
+        m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -405,6 +437,7 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SeedsSwitchGamePad;
     private readonly InputAction m_Player_RevertWeather;
     private readonly InputAction m_Player_ForwardWeather;
+    private readonly InputAction m_Player_PauseMenu;
     public struct PlayerActions
     {
         private @PlayerActionInput m_Wrapper;
@@ -416,6 +449,7 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         public InputAction @SeedsSwitchGamePad => m_Wrapper.m_Player_SeedsSwitchGamePad;
         public InputAction @RevertWeather => m_Wrapper.m_Player_RevertWeather;
         public InputAction @ForwardWeather => m_Wrapper.m_Player_ForwardWeather;
+        public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -446,6 +480,9 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
             @ForwardWeather.started += instance.OnForwardWeather;
             @ForwardWeather.performed += instance.OnForwardWeather;
             @ForwardWeather.canceled += instance.OnForwardWeather;
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -471,6 +508,9 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
             @ForwardWeather.started -= instance.OnForwardWeather;
             @ForwardWeather.performed -= instance.OnForwardWeather;
             @ForwardWeather.canceled -= instance.OnForwardWeather;
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -497,5 +537,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         void OnSeedsSwitchGamePad(InputAction.CallbackContext context);
         void OnRevertWeather(InputAction.CallbackContext context);
         void OnForwardWeather(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
 }
