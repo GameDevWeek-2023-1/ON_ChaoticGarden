@@ -56,7 +56,9 @@ public class WeatherController : MonoBehaviour
     }
     private void Update()
     {
-        if(_changeWeatherTime <= 0f)
+        if (GameStatesController.Instance.GetGamePauseState()) return;
+
+        if (_changeWeatherTime <= 0f)
         {
             if (_currentWeatherIndex > weatherList.Count - 1) return;
 
@@ -79,17 +81,40 @@ public class WeatherController : MonoBehaviour
 
         if (_currentWeatherIndex > weatherList.Count - 1)
         {
+            //FunctionTimer.Create(() =>
+            //{
+            //    OnTimeBeforeWeatherChange?.Invoke(this, EventArgs.Empty);
+
+            //    FunctionTimer.Create(() =>
+            //    {
+            //        SetRandomWeather();
+            //        _currentWeatherIndex = 0;
+            //        OnWeatherChanged?.Invoke(this, weatherList);
+            //    }, resetDelayTime);
+            //}, _backUpChangeWeatherTime);
+
             FunctionTimer.Create(() =>
             {
-                OnTimeBeforeWeatherChange?.Invoke(this, EventArgs.Empty);
-
-                FunctionTimer.Create(() =>
+                if (!GameStatesController.Instance.GetGamePauseState())
                 {
-                    SetRandomWeather();
-                    _currentWeatherIndex = 0;
-                    OnWeatherChanged?.Invoke(this, weatherList);
-                }, resetDelayTime);
-            }, _backUpChangeWeatherTime);
+                    _backUpChangeWeatherTime -= Time.deltaTime;
+                }
+
+                if(_backUpChangeWeatherTime <= 0f)
+                {
+                    FunctionTimer.Create(() =>
+                        {
+                            SetRandomWeather();
+                            _currentWeatherIndex = 0;
+                            OnWeatherChanged?.Invoke(this, weatherList);
+                        }, resetDelayTime);
+
+                    OnTimeBeforeWeatherChange?.Invoke(this, EventArgs.Empty);
+                    _backUpChangeWeatherTime = 0;
+                }
+
+                return _backUpChangeWeatherTime == 0;
+            }, "", true);
         }
 
         switch (_currentWeather)

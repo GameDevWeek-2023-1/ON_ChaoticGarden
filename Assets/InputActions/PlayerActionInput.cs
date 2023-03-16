@@ -73,15 +73,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""RevertWeather"",
-                    ""type"": ""Button"",
-                    ""id"": ""3e3f6637-8863-4564-8b7e-8ecec1a03274"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""ForwardWeather"",
                     ""type"": ""Button"",
                     ""id"": ""a187547f-5125-4cbf-8a9b-8819e7a68202"",
@@ -279,28 +270,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1d9ce5cc-ae02-4370-bd52-1e5a8af71356"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RevertWeather"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""164cb199-9c95-4416-8118-03204da84c55"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RevertWeather"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""72a6bee3-23ba-4700-ac6f-017d5e8d0f8a"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -366,7 +335,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         m_Player_Planting = m_Player.FindAction("Planting", throwIfNotFound: true);
         m_Player_SeedsSwitchPC = m_Player.FindAction("SeedsSwitchPC", throwIfNotFound: true);
         m_Player_SeedsSwitchGamePad = m_Player.FindAction("SeedsSwitchGamePad", throwIfNotFound: true);
-        m_Player_RevertWeather = m_Player.FindAction("RevertWeather", throwIfNotFound: true);
         m_Player_ForwardWeather = m_Player.FindAction("ForwardWeather", throwIfNotFound: true);
         m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
     }
@@ -435,7 +403,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Planting;
     private readonly InputAction m_Player_SeedsSwitchPC;
     private readonly InputAction m_Player_SeedsSwitchGamePad;
-    private readonly InputAction m_Player_RevertWeather;
     private readonly InputAction m_Player_ForwardWeather;
     private readonly InputAction m_Player_PauseMenu;
     public struct PlayerActions
@@ -447,7 +414,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         public InputAction @Planting => m_Wrapper.m_Player_Planting;
         public InputAction @SeedsSwitchPC => m_Wrapper.m_Player_SeedsSwitchPC;
         public InputAction @SeedsSwitchGamePad => m_Wrapper.m_Player_SeedsSwitchGamePad;
-        public InputAction @RevertWeather => m_Wrapper.m_Player_RevertWeather;
         public InputAction @ForwardWeather => m_Wrapper.m_Player_ForwardWeather;
         public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -474,9 +440,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
             @SeedsSwitchGamePad.started += instance.OnSeedsSwitchGamePad;
             @SeedsSwitchGamePad.performed += instance.OnSeedsSwitchGamePad;
             @SeedsSwitchGamePad.canceled += instance.OnSeedsSwitchGamePad;
-            @RevertWeather.started += instance.OnRevertWeather;
-            @RevertWeather.performed += instance.OnRevertWeather;
-            @RevertWeather.canceled += instance.OnRevertWeather;
             @ForwardWeather.started += instance.OnForwardWeather;
             @ForwardWeather.performed += instance.OnForwardWeather;
             @ForwardWeather.canceled += instance.OnForwardWeather;
@@ -502,9 +465,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
             @SeedsSwitchGamePad.started -= instance.OnSeedsSwitchGamePad;
             @SeedsSwitchGamePad.performed -= instance.OnSeedsSwitchGamePad;
             @SeedsSwitchGamePad.canceled -= instance.OnSeedsSwitchGamePad;
-            @RevertWeather.started -= instance.OnRevertWeather;
-            @RevertWeather.performed -= instance.OnRevertWeather;
-            @RevertWeather.canceled -= instance.OnRevertWeather;
             @ForwardWeather.started -= instance.OnForwardWeather;
             @ForwardWeather.performed -= instance.OnForwardWeather;
             @ForwardWeather.canceled -= instance.OnForwardWeather;
@@ -535,7 +495,6 @@ public partial class @PlayerActionInput: IInputActionCollection2, IDisposable
         void OnPlanting(InputAction.CallbackContext context);
         void OnSeedsSwitchPC(InputAction.CallbackContext context);
         void OnSeedsSwitchGamePad(InputAction.CallbackContext context);
-        void OnRevertWeather(InputAction.CallbackContext context);
         void OnForwardWeather(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
     }

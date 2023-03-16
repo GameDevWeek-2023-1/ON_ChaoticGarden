@@ -17,4 +17,21 @@ public class AnimationEvent : MonoBehaviour
                 break;
         }
     }
+    public void SwitchToGameScene()
+    {
+        SceneLoaderController.Load(SceneLoaderController.Scenes.GameScene);
+    }
+    public void SelfDeactivation()
+    {
+        gameObject.SetActive(false);
+        GameStatesController.Instance.ResetGamePauseState();
+    }
+    public void RestartGameScene()
+    {
+        SceneLoaderController.Load(SceneLoaderController.Scenes.GameScene);
+    }
+    public void LoadToHomeScene()
+    {
+        SceneLoaderController.Load(SceneLoaderController.Scenes.HomeScene);
+    }
 }

@@ -23,6 +23,8 @@ public class PlayerAnimator : MonoBehaviour
     }
     private void Update()
     {
+        if (GameStatesController.Instance.GetGamePauseState()) return;
+
         _playerAnimator.SetBool(IS_WALKING, _player.IsWalking());
 
         _playerAnimator.SetFloat("X", _player.GetPlayerInput().GetMovementVectorNormalized().x);

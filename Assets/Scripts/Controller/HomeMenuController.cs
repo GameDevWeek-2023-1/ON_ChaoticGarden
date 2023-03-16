@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class HomeMenuController : MonoBehaviour
 {
+    [SerializeField] private Transform transitionTransform;
     public void LoadToGameScene()
     {
-        SceneLoaderController.Load(SceneLoaderController.Scenes.GameScene);
+        transitionTransform.gameObject.SetActive(true);
     }
 
     public void QuitGame()

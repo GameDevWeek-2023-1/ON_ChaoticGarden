@@ -51,15 +51,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "RevertWeather",
-                    "type": "Button",
-                    "id": "3e3f6637-8863-4564-8b7e-8ecec1a03274",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "ForwardWeather",
                     "type": "Button",
                     "id": "a187547f-5125-4cbf-8a9b-8819e7a68202",
@@ -252,28 +243,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "SeedsSwitchPC",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1d9ce5cc-ae02-4370-bd52-1e5a8af71356",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RevertWeather",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "164cb199-9c95-4416-8118-03204da84c55",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RevertWeather",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

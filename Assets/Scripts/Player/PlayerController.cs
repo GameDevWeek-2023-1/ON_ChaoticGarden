@@ -33,6 +33,12 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        if (GameStatesController.Instance.GetGamePauseState())
+        {
+            _isWalking = false;
+            return;
+        }
+
         if (_isPlantingSeed)
         {
             _isWalking = false;

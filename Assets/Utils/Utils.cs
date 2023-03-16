@@ -13,6 +13,10 @@ namespace UtilsClass
         {
             return (int)(baseSortingOrder - position.y) + offset;
         }
+        public static int GetSortingOrderWithZ(Vector3 position, int offset, int baseSortingOrder = SORTINGORDER_DEFAULTVALUE)
+        {
+            return (int)(baseSortingOrder - position.z) + offset;
+        }
 
         //Mouse Position in 2D
         private static Camera mainCamera;
