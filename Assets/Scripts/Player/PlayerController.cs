@@ -53,7 +53,6 @@ public class PlayerController : MonoBehaviour
 
         if(_isAttacking)
         {
-            _isWalking = false;
             return;
         }
 
