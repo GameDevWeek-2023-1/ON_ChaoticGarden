@@ -16,6 +16,11 @@ public class PlayerAnimator : MonoBehaviour
     private void Start()
     {
         _player.GetPlayerInput().OnSamenPlanted += PlayerController_PlayerInput_OnSamenPlanted;
+        _player.GetPlayerInput().OnAttacked += PlayerController_PlayerInput_OnAttacked;
+    }
+    private void PlayerController_PlayerInput_OnAttacked(object sender, System.EventArgs e)
+    {
+        _playerAnimator.SetTrigger("Attack");
     }
     private void PlayerController_PlayerInput_OnSamenPlanted(object sender, System.EventArgs e)
     {

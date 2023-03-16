@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     public event EventHandler OnSamenPlanted;
+    public event EventHandler OnAttacked;
     public event EventHandler OnSamenSwitched;
     public event EventHandler OnWeatherForward;
     public event EventHandler OnPauseButtonPressed;
@@ -43,7 +44,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (GameStatesController.Instance.GetGamePauseState()) return;
 
-        Debug.Log("Attack");
+        OnAttacked?.Invoke(this, EventArgs.Empty);
     }
     private void PlayerInput_SeedsSwitchPC_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {

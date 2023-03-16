@@ -172,7 +172,7 @@ Transform:
   - {fileID: 8420740768703998675}
   - {fileID: 2257532561042607499}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &736810714831826603
 CapsuleCollider:
@@ -301,6 +301,14 @@ PrefabInstance:
       propertyPath: moveWithTransform
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8200290374148055851, guid: 4759b1fc056a0e548bc602e1d14487cc, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200290374148055851, guid: 4759b1fc056a0e548bc602e1d14487cc, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 8846899099401050429, guid: 4759b1fc056a0e548bc602e1d14487cc, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -371,13 +379,21 @@ PrefabInstance:
       propertyPath: moveWithTransform
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 512655123884251615, guid: 2575c4776753e07469fc7ffcd1d09aca, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 512655123884251615, guid: 2575c4776753e07469fc7ffcd1d09aca, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1934631248883560391, guid: 2575c4776753e07469fc7ffcd1d09aca, type: 3}
       propertyPath: m_RootOrder
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1934631248883560391, guid: 2575c4776753e07469fc7ffcd1d09aca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.56
+      value: -26.03
       objectReference: {fileID: 0}
     - target: {fileID: 1934631248883560391, guid: 2575c4776753e07469fc7ffcd1d09aca, type: 3}
       propertyPath: m_LocalPosition.y

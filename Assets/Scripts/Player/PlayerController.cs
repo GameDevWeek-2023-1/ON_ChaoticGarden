@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private float plantingResetTime = 1f;
+    [SerializeField] private float attackingResetTime = .5f;
 
     private float _playerRadius;
     private bool _isWalking;
     private bool _isPlantingSeed;
+    private bool _isAttacking;
     private void Awake()
     {
         _playerRadius = GetComponent<CapsuleCollider>().radius;
@@ -21,6 +23,16 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _playerInput.OnSamenPlanted += PlayerInput_OnSamenPlanted;
+        _playerInput.OnAttacked += PlayerInput_OnAttacked;
+    }
+    private void PlayerInput_OnAttacked(object sender, System.EventArgs e)
+    {
+        _isAttacking = true;
+
+        FunctionTimer.Create(() =>
+        {
+            _isAttacking = false;
+        }, attackingResetTime);
     }
     private void PlayerInput_OnSamenPlanted(object sender, System.EventArgs e)
     {
@@ -34,6 +46,12 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (GameStatesController.Instance.GetGamePauseState())
+        {
+            _isWalking = false;
+            return;
+        }
+
+        if(_isAttacking)
         {
             _isWalking = false;
             return;
