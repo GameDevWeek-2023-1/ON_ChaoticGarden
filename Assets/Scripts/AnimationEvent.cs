@@ -34,4 +34,8 @@ public class AnimationEvent : MonoBehaviour
     {
         SceneLoaderController.Load(SceneLoaderController.Scenes.HomeScene);
     }
+    public void SelfDeactivationHomeMenu()
+    {
+        gameObject.SetActive(false);
+    }
 }

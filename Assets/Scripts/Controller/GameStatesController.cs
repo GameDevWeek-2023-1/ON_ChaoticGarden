@@ -21,6 +21,9 @@ public class GameStatesController : MonoBehaviour
             return;
         }
         Instance = this;
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
     private void Start()
     {
@@ -30,10 +33,14 @@ public class GameStatesController : MonoBehaviour
     {
         _gameIsPaused = true;
         OnGamePaused?.Invoke(this, EventArgs.Empty);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     public void BackToGame()
     {
         OnGamePausedReset?.Invoke(this, EventArgs.Empty);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
     public void ResetGamePauseState()
     {
