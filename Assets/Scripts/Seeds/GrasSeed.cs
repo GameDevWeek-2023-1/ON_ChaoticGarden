@@ -32,49 +32,52 @@ public class GrasSeed : MonoBehaviour
             animator.SetBool("dangerous", true);
             _isDangerours = true;
 
-            if (_hasDoneDamage)
+            if (_hasGrown)
             {
-                _damageDelayTime -= Time.deltaTime;
-                if (_damageDelayTime <= 0f)
+                if (_hasDoneDamage)
                 {
-                    _damageDelayTime = maxDamageDealyTime;
-                    _hasDoneDamage = false;
-                }
-            }
-
-            if(!_hasDoneDamage)
-            {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, checkRadiusDamage);
-
-                if (colliders.Length != 0)
-                {
-                    foreach (Collider item in colliders)
+                    _damageDelayTime -= Time.deltaTime;
+                    if (_damageDelayTime <= 0f)
                     {
-                        if (item.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
+                        _damageDelayTime = maxDamageDealyTime;
+                        _hasDoneDamage = false;
+                    }
+                }
+
+                if (!_hasDoneDamage)
+                {
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, checkRadiusDamage);
+
+                    if (colliders.Length != 0)
+                    {
+                        foreach (Collider item in colliders)
                         {
-                            healthSystem.TakeDamage();
-                            _hasDoneDamage = true;
+                            if (item.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
+                            {
+                                healthSystem.TakeDamage();
+                                _hasDoneDamage = true;
+                            }
                         }
                     }
                 }
             }
-
-            if (_hasGrown) return;
-
-            if (_growTime <= 0f)
-            {
-                Instantiate(upgradeParticle, transform.position, Quaternion.identity);
-
-                float delayTime = .15f;
-                FunctionTimer.Create(() =>
-                {
-                    transform.localScale = new Vector3(maxSize, maxSize, maxSize);
-                    _hasGrown = true;
-                }, delayTime);
-            }
             else
             {
-                _growTime -= Time.deltaTime;
+                if (_growTime <= 0f)
+                {
+                    Instantiate(upgradeParticle, transform.position, Quaternion.identity);
+
+                    float delayTime = .15f;
+                    FunctionTimer.Create(() =>
+                    {
+                        transform.localScale = new Vector3(maxSize, maxSize, maxSize);
+                        _hasGrown = true;
+                    }, delayTime);
+                }
+                else
+                {
+                    _growTime -= Time.deltaTime;
+                }
             }
         }
         else
