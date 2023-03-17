@@ -7,7 +7,8 @@ public class MushroomBullet : MonoBehaviour
     [SerializeField] private Transform hitEffect;
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
+        if(collision.gameObject.TryGetComponent<HealthSystem>(out HealthSystem healthSystem) 
+            && collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             healthSystem.TakeDamage();
         }

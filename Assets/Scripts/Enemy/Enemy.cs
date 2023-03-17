@@ -13,15 +13,20 @@ public class Enemy : MonoBehaviour
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private float checkRadius;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float hitRadius = 3f;
+    [SerializeField] private float attackWaitTime = 2f;
     [SerializeField] private LayerMask playerLayerMask;
     [SerializeField] private Animator animator;
     [SerializeField] private HealthSystem healthSystem;
     [SerializeField] private Image healthBar;
 
     private PlayerController _playerController;
+    private float _attackWaitTime;
     private void Start()
     {
         navMeshAgent.speed = moveSpeed;
+        _attackWaitTime = attackWaitTime;
+
         _playerController = FindObjectOfType<PlayerController>();
         healthSystem.OnDamage += HealthSystem_OnDamage;
         healthSystem.OnDied += HealthSystem_OnDied;
@@ -62,6 +67,19 @@ public class Enemy : MonoBehaviour
         {
             navMeshAgent.SetDestination(_playerController.transform.position);
             animator.SetBool("noTarget", true);
+
+            if (Vector3.Distance(transform.position, _playerController.transform.position) < hitRadius)
+            {
+                if(_attackWaitTime <= 0f)
+                {
+                    _playerController.GetComponent<HealthSystem>().TakeDamage();
+                    _attackWaitTime = attackWaitTime;
+                }
+                else
+                {
+                    _attackWaitTime -= Time.deltaTime;
+                }
+            }
         }
         else
         {

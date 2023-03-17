@@ -26,7 +26,7 @@ public class PlayerInput : MonoBehaviour
         _playerActionInput.Player.Planting.performed += PlayerInput_Planting_performed;
         _playerActionInput.Player.SeedsSwitchPC.performed += PlayerInput_SeedsSwitchPC_performed;
         _playerActionInput.Player.SeedsSwitchGamePad.performed += PlayerInput_SeedsSwitchGamePad_performed;
-        _playerActionInput.Player.Attack.performed += PlayerInput_Attack_performed;
+        //_playerActionInput.Player.Attack.performed += PlayerInput_Attack_performed;
         _playerActionInput.Player.ForwardWeather.performed += PlayerInput_ForwardWeather_performed;
         _playerActionInput.Player.PauseMenu.performed += PlayerInput_PauseMenu_performed;
     }

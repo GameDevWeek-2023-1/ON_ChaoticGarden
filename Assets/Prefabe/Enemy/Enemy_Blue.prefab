@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 3438443947719267963}
   - component: {fileID: 3101105022048541788}
   - component: {fileID: 1830493144912685264}
+  - component: {fileID: -8637789900064914226}
   m_Layer: 7
-  m_Name: Enemy_Green
+  m_Name: Enemy_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +36,7 @@ Transform:
   - {fileID: 3547693514216209293}
   - {fileID: 381325053960603615}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8587501947812660041
 BoxCollider:
@@ -72,7 +73,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 0
-  m_StoppingDistance: 1
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -93,12 +94,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 3438443947719267963}
-  checkRadius: 12
-  moveSpeed: 4
+  checkRadius: 8
+  moveSpeed: 8
+  hitRadius: 3
+  attackWaitTime: 2
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  animator: {fileID: 6549815882463841834}
+  animator: {fileID: 2303562128601337485}
   healthSystem: {fileID: 1830493144912685264}
   healthBar: {fileID: 1706859064091851012}
 --- !u!114 &1830493144912685264
@@ -113,10 +116,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9d57d0093a4ac45a99a879d64035eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
+  maxHealth: 50
   spriteRenderer: {fileID: 7570670271800584158}
   hitColor: {r: 0.6117647, g: 0, b: 0, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!54 &-8637789900064914226
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819671459398036265}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3044369836346538969
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +275,7 @@ GameObject:
   - component: {fileID: 3547693514216209293}
   - component: {fileID: 7570670271800584158}
   - component: {fileID: 713276658029535772}
-  - component: {fileID: 6549815882463841834}
+  - component: {fileID: 2303562128601337485}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -309,7 +339,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 05e89119a169de945baea0af64afef56, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6f8d3367ad3802740885c7647efb3b3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -333,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sortSpriteAllTheTime: 1
---- !u!95 &6549815882463841834
+--- !u!95 &2303562128601337485
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -343,7 +373,7 @@ Animator:
   m_GameObject: {fileID: 4067154821623824766}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 98a1b480358ad6445ad5beeeff1cdd12, type: 2}
+  m_Controller: {fileID: 9100000, guid: d4a0d8a25ce51e74a8becde5cfb4a017, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
