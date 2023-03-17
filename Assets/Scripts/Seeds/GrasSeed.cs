@@ -7,12 +7,17 @@ public class GrasSeed : MonoBehaviour
     [SerializeField] private float maxSize;
     [SerializeField] private float maxTimeToGrow;
     [SerializeField] private float minTimeToGrow;
-    //[SerializeField] private Animator animator;
+    [SerializeField] private float maxDamageDealyTime;
+    [SerializeField] private float checkRadiusDamage;
+    [SerializeField] private float checkRadiusHiding;
     [SerializeField] private Transform upgradeParticle;
     [SerializeField] private Animator animator;
 
     private float _growTime;
     private bool _hasGrown;
+    private float _damageDelayTime;
+    private bool _hasDoneDamage = false;
+    private bool _isDangerours;
     private void Start()
     {
         _growTime = Random.Range(minTimeToGrow, maxTimeToGrow);
@@ -25,6 +30,34 @@ public class GrasSeed : MonoBehaviour
         if (WeatherController.Instance.GetCurrentWeatherType() == WeatherController.Weather.Sunny)
         {
             animator.SetBool("dangerous", true);
+            _isDangerours = true;
+
+            if (_hasDoneDamage)
+            {
+                _damageDelayTime -= Time.deltaTime;
+                if (_damageDelayTime <= 0f)
+                {
+                    _damageDelayTime = maxDamageDealyTime;
+                    _hasDoneDamage = false;
+                }
+            }
+
+            if(!_hasDoneDamage)
+            {
+                Collider[] colliders = Physics.OverlapSphere(transform.position, checkRadiusDamage);
+
+                if (colliders.Length != 0)
+                {
+                    foreach (Collider item in colliders)
+                    {
+                        if (item.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
+                        {
+                            healthSystem.TakeDamage();
+                            _hasDoneDamage = true;
+                        }
+                    }
+                }
+            }
 
             if (_hasGrown) return;
 
@@ -47,6 +80,12 @@ public class GrasSeed : MonoBehaviour
         else
         {
             animator.SetBool("dangerous", false);
+            _hasDoneDamage = false;
+            _isDangerours = false;
+            _damageDelayTime = maxDamageDealyTime;
         }
     }
+
+    public bool HasGrown() => _hasGrown;
+    public bool IsDangerous() => _isDangerours;
 }

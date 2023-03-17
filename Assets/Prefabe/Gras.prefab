@@ -59,7 +59,8 @@ GameObject:
   - component: {fileID: 8202124176747635124}
   - component: {fileID: 8845567629824597025}
   - component: {fileID: 2582981443701409194}
-  m_Layer: 0
+  - component: {fileID: 3886252419878760492}
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,6 +162,9 @@ MonoBehaviour:
   maxSize: 0.1
   maxTimeToGrow: 8
   minTimeToGrow: 3
+  maxDamageDealyTime: 2
+  checkRadiusDamage: 1
+  checkRadiusHiding: 0
   upgradeParticle: {fileID: 4772118390566308, guid: cc5fe9d4788fc6a43b4ab119d6675e5c, type: 3}
   animator: {fileID: 2582981443701409194}
 --- !u!95 &2582981443701409194
@@ -184,3 +188,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &3886252419878760492
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6318289421103451193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 21.11, y: 20.481236, z: 0.20000061}
+  m_Center: {x: 0, y: 0, z: 0}

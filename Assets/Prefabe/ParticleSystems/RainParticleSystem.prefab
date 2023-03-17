@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6363064872160418186}
   - component: {fileID: 1615068992722608823}
   - component: {fileID: 3977712889796336809}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RippleParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4897,7 +4897,7 @@ GameObject:
   - component: {fileID: 7123722310955240246}
   - component: {fileID: 4199880802405289782}
   - component: {fileID: 2181384293464114783}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RainParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

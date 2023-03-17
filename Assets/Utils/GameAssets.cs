@@ -21,4 +21,5 @@ public class GameAssets : MonoBehaviour
 
     public Transform seedGras;
     public Transform seedMushroom;
+    public Transform seedBag;
 }

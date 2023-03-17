@@ -11,11 +11,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private float plantingResetTime = 1f;
     [SerializeField] private float attackingResetTime = .5f;
+    [SerializeField] private float checkRadiusForHiding = 1f;
+    [SerializeField] private LayerMask layerMask;
 
     private float _playerRadius;
     private bool _isWalking;
     private bool _isPlantingSeed;
     private bool _isAttacking;
+    private bool _isHidden;
     private void Awake()
     {
         _playerRadius = GetComponent<CapsuleCollider>().radius;
@@ -66,7 +69,30 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        CheckIsPlayerIsHiding();
         HandleMovement();
+    }
+    private void CheckIsPlayerIsHiding()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, checkRadiusForHiding, layerMask);
+
+        if(colliders.Length != 0)
+        {
+            foreach (Collider collider in colliders)
+            {
+                if(collider.TryGetComponent<GrasSeed>(out GrasSeed grasSeed))
+                {
+                    if(grasSeed.HasGrown())
+                    {
+                        SetPlayerHideState(true);
+                    }
+                }
+            }
+        }
+        else
+        {
+            SetPlayerHideState(false);
+        }
     }
     private void HandleMovement()
     {
@@ -75,14 +101,14 @@ public class PlayerController : MonoBehaviour
 
         float playerHight = 1f;
         float moveDistance = moveSpeed * Time.deltaTime;
-        bool canMove = !Physics.CapsuleCast(transform.position + (Vector3.up * .3f), transform.position + Vector3.up * playerHight, _playerRadius, moveDir, moveDistance);
+        bool canMove = !Physics.CapsuleCast(transform.position + (Vector3.up * .3f), transform.position + Vector3.up * playerHight, _playerRadius, moveDir, moveDistance, layerMask, QueryTriggerInteraction.Ignore);
 
         //Wenn wir nicht bewegen können, weil wir gegen was laufen
         if (!canMove)
         {
             //Only X Movement
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
-            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, _playerRadius, moveDirX, moveDistance);
+            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, _playerRadius, moveDirX, moveDistance, layerMask, QueryTriggerInteraction.Ignore);
 
             //Can move only on X
             if (canMove)
@@ -93,7 +119,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Can not move on x than z
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
-                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, _playerRadius, moveDirZ, moveDistance);
+                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, _playerRadius, moveDirZ, moveDistance, layerMask, QueryTriggerInteraction.Ignore);
 
                 if (canMove)
                 {
@@ -113,4 +139,9 @@ public class PlayerController : MonoBehaviour
     }
     public bool IsWalking() => _isWalking;
     public PlayerInput GetPlayerInput() => _playerInput;
+    public void SetPlayerHideState(bool hide)
+    {
+        _isHidden = hide;
+    }
+    public bool IsPlayerHidden() => _isHidden;
 }

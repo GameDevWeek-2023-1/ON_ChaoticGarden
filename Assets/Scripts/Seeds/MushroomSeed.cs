@@ -54,4 +54,5 @@ public class MushroomSeed : MonoBehaviour
         }
     }
     public bool IsDead() => _isDead;
+    public bool IsGrown() => _hasGrown;
 }

@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seedGras: {fileID: 1623537914167723247, guid: 1ba5db5216094aa46b93c4c9a58089df, type: 3}
   seedMushroom: {fileID: 2518403260082516311, guid: cf438f5731e9fe745b37489a427f9d70, type: 3}
+  seedBag: {fileID: 5146635708842207650, guid: 984d214129d8fa44695bfe5209871b53, type: 3}

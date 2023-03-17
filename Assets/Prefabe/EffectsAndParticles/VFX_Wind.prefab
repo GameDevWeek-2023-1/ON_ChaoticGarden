@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4809710419663912}
   - component: {fileID: 198708924916045680}
   - component: {fileID: 199625746098378610}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: VFX_Wind
   m_TagString: Untagged
   m_Icon: {fileID: 0}

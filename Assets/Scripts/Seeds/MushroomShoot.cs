@@ -19,6 +19,8 @@ public class MushroomShoot : MonoBehaviour
     {
         if (mushroomSeed.IsDead()) return;
 
+        if (!mushroomSeed.IsGrown()) return;
+
         Collider[] enemyColliders = Physics.OverlapSphere(transform.position, checkRadius, enemyLayerMask);
         
         if (_hasShot)
