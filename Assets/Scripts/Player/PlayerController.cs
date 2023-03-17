@@ -22,9 +22,22 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        _playerInput.OnSamenPlanted += PlayerInput_OnSamenPlanted;
+        SeedController.Instance.OnSeedPlanted += SeedController_OnSeedPlanted;
         _playerInput.OnAttacked += PlayerInput_OnAttacked;
     }
+
+    private void SeedController_OnSeedPlanted(object sender, SeedController.OnSeedPlantedEventArgs e)
+    {
+        if (!e.canPlant) return;
+        
+        _isPlantingSeed = true;
+
+        FunctionTimer.Create(() =>
+        {
+            _isPlantingSeed = false;
+        }, plantingResetTime);
+    }
+
     private void PlayerInput_OnAttacked(object sender, System.EventArgs e)
     {
         _isAttacking = true;
@@ -33,15 +46,6 @@ public class PlayerController : MonoBehaviour
         {
             _isAttacking = false;
         }, attackingResetTime);
-    }
-    private void PlayerInput_OnSamenPlanted(object sender, System.EventArgs e)
-    {
-        _isPlantingSeed = true;
-
-        FunctionTimer.Create(() =>
-        {
-            _isPlantingSeed = false;
-        }, plantingResetTime);
     }
     private void Update()
     {

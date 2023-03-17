@@ -25,10 +25,11 @@ public class WeatherController : MonoBehaviour
     [SerializeField] private ParticleSystem normalWeatherParticleSystem;
     [SerializeField] private ParticleSystem rainyWeatherParticleSystem;
     [SerializeField] private ParticleSystem stormyWeatherParticleSystem;
+    [SerializeField] private ParticleSystem stormyWeatherWindParticleSystem;
     [SerializeField] private List<Weather> weatherList = new List<Weather>();
     [SerializeField] private MMF_Player Feel_Feedback_Lensdistortion;
 
-    private Weather _currentWeather;
+    public Weather _currentWeather;
     private float _changeWeatherTime;
     private float _backUpChangeWeatherTime;
     private int _currentWeatherIndex = 0;
@@ -46,6 +47,10 @@ public class WeatherController : MonoBehaviour
     private void Start()
     {
         TimeSkipController.Instance.OnTimeSkipped += TimeSkipController_OnWeatherForward;
+
+        rainyWeatherParticleSystem.Stop();
+        stormyWeatherParticleSystem.Stop();
+        stormyWeatherWindParticleSystem.Stop();
     }
     private void TimeSkipController_OnWeatherForward(object sender, EventArgs e)
     {
@@ -120,28 +125,28 @@ public class WeatherController : MonoBehaviour
         switch (_currentWeather)
         {
             case Weather.Normal:
-                _currentWeather = Weather.Rainy;
-                normalWeatherParticleSystem.Play();
+                //normalWeatherParticleSystem.Play();
                 rainyWeatherParticleSystem.Stop();
                 stormyWeatherParticleSystem.Stop();
+                stormyWeatherWindParticleSystem.Stop();
                 break;
             case Weather.Rainy:
-                _currentWeather = Weather.Stormy;
-                normalWeatherParticleSystem.Stop();
+                //normalWeatherParticleSystem.Stop();
                 rainyWeatherParticleSystem.Play();
                 stormyWeatherParticleSystem.Stop();
+                stormyWeatherWindParticleSystem.Stop();
                 break;
             case Weather.Stormy:
-                _currentWeather = Weather.Sunny;
-                normalWeatherParticleSystem.Stop();
+                //normalWeatherParticleSystem.Stop();
                 rainyWeatherParticleSystem.Stop();
                 stormyWeatherParticleSystem.Play();
+                stormyWeatherWindParticleSystem.Play();
                 break;
             case Weather.Sunny:
-                _currentWeather = Weather.Normal;
-                normalWeatherParticleSystem.Stop();
+                //normalWeatherParticleSystem.Stop();
                 rainyWeatherParticleSystem.Stop();
                 stormyWeatherParticleSystem.Stop();
+                stormyWeatherWindParticleSystem.Stop();
                 break;
         }
     }
@@ -170,4 +175,5 @@ public class WeatherController : MonoBehaviour
     }
     public List<Weather> GetWeatherList() => weatherList;
     public int GetCurrentWeatherIndex() => _currentWeatherIndex;
+    public Weather GetCurrentWeatherType() => _currentWeather;
 }

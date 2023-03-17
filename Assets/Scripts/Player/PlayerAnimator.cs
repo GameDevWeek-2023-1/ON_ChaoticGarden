@@ -15,16 +15,18 @@ public class PlayerAnimator : MonoBehaviour
     }
     private void Start()
     {
-        _player.GetPlayerInput().OnSamenPlanted += PlayerController_PlayerInput_OnSamenPlanted;
         _player.GetPlayerInput().OnAttacked += PlayerController_PlayerInput_OnAttacked;
+        SeedController.Instance.OnSeedPlanted += SeedController_OnSeedPlanted; ;
+    }
+    private void SeedController_OnSeedPlanted(object sender, SeedController.OnSeedPlantedEventArgs e)
+    {
+        if (!e.canPlant) return;
+
+        _playerAnimator.SetTrigger("PlaceSeed");
     }
     private void PlayerController_PlayerInput_OnAttacked(object sender, System.EventArgs e)
     {
         _playerAnimator.SetTrigger("Attack");
-    }
-    private void PlayerController_PlayerInput_OnSamenPlanted(object sender, System.EventArgs e)
-    {
-        _playerAnimator.SetTrigger("PlaceSeed");
     }
     private void Update()
     {
