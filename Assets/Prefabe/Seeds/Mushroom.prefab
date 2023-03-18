@@ -162,7 +162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4082700919829278269}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -202,7 +202,7 @@ Transform:
   - {fileID: 2321695134177793897}
   - {fileID: 610195999657084809}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-1189217437482800811
 MonoBehaviour:
@@ -236,5 +236,6 @@ MonoBehaviour:
   bulletTransform: {fileID: 6601771352352941173, guid: bfe198f472fc49a43b61075f68dc27b2, type: 3}
   spawnPointTransform: {fileID: 610195999657084809}
   shootCooldown: 2
+  shootForce: 15
   mushroomSeed: {fileID: 1327991913758432907}
   _isEnemyNearBy: 0

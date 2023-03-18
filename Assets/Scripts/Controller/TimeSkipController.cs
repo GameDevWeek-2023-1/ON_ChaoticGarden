@@ -39,6 +39,7 @@ public class TimeSkipController : MonoBehaviour
         _timeSkipCounter++;
         timeSkipOverlayImage.gameObject.SetActive(true);
         OnTimeSkipped?.Invoke(this, EventArgs.Empty);
+        SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.TimeSkip);
 
         //Je öffter man ihn benutzt, desto größerer Cooldown
         if(_timeSkipCounter >= 3)

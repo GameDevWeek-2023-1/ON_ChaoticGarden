@@ -73,6 +73,7 @@ public class Enemy : MonoBehaviour
                 if(_attackWaitTime <= 0f)
                 {
                     _playerController.GetComponent<HealthSystem>().TakeDamage();
+                    SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.PlayerDamage);
                     _attackWaitTime = attackWaitTime;
                 }
                 else

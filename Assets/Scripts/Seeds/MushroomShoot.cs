@@ -17,6 +17,8 @@ public class MushroomShoot : MonoBehaviour
     private bool _hasShot = false;
     private void Update()
     {
+        if (GameStatesController.Instance.GetGamePauseState()) return;
+
         if (mushroomSeed.IsDead()) return;
 
         if (!mushroomSeed.IsGrown()) return;
@@ -40,10 +42,12 @@ public class MushroomShoot : MonoBehaviour
 
             Vector3 shootDir = (enemyCollider.gameObject.transform.position - spawnPointTransform.position).normalized;
 
-            Transform spawnedBulletTransform = Instantiate(bulletTransform, spawnPointTransform);
+            Transform spawnedBulletTransform = Instantiate(bulletTransform, enemyCollider.transform.position, Quaternion.identity);
             spawnedBulletTransform.GetComponent<Rigidbody>().velocity = shootDir * shootForce;
 
             _hasShot = true;
+
+            SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.MushroomShot);
         }
     }
 }

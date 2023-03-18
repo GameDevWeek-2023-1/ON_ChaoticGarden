@@ -11,6 +11,7 @@ public class MushroomBullet : MonoBehaviour
             && collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             healthSystem.TakeDamage();
+            SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.EnemyDamage);
         }
         Instantiate(hitEffect, collision.GetContact(0).point, Quaternion.identity);
         Destroy(gameObject);

@@ -16,6 +16,7 @@ public class MushroomSeed : MonoBehaviour
     private void Start()
     {
         _growTime = Random.Range(minTimeToGrow, maxTimeToGrow);
+        SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.MushroomPlant);
     }
 
     private void Update()
@@ -40,6 +41,7 @@ public class MushroomSeed : MonoBehaviour
                 {
                     transform.localScale = new Vector3(maxSize, maxSize, maxSize);
                     _hasGrown = true;
+                    SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.MushroomGrow);
                 }, delayTime);
             }
             else
@@ -51,6 +53,7 @@ public class MushroomSeed : MonoBehaviour
         {
             animator.SetBool("Dead", true);
             _isDead = true;
+            SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.MushroomDie);
         }
     }
     public bool IsDead() => _isDead;

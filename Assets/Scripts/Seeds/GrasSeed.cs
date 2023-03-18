@@ -21,6 +21,7 @@ public class GrasSeed : MonoBehaviour
     private void Start()
     {
         _growTime = Random.Range(minTimeToGrow, maxTimeToGrow);
+        SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.GrassPlant);
     }
 
     private void Update()
@@ -72,6 +73,7 @@ public class GrasSeed : MonoBehaviour
                     {
                         transform.localScale = new Vector3(maxSize, maxSize, maxSize);
                         _hasGrown = true;
+                        SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.GrassGrow);
                     }, delayTime);
                 }
                 else

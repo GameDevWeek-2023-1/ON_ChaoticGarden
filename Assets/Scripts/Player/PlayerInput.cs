@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     public event EventHandler OnSamenSwitched;
     public event EventHandler OnWeatherForward;
     public event EventHandler OnPauseButtonPressed;
+    public event EventHandler OnInteract;
 
     private PlayerActionInput _playerActionInput;
     private void OnEnable()
@@ -29,6 +30,11 @@ public class PlayerInput : MonoBehaviour
         //_playerActionInput.Player.Attack.performed += PlayerInput_Attack_performed;
         _playerActionInput.Player.ForwardWeather.performed += PlayerInput_ForwardWeather_performed;
         _playerActionInput.Player.PauseMenu.performed += PlayerInput_PauseMenu_performed;
+        _playerActionInput.Player.Interact.performed += PlayerInput_Interact_performed;
+    }
+    private void PlayerInput_Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnInteract?.Invoke(this, EventArgs.Empty);
     }
     private void PlayerInput_PauseMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {

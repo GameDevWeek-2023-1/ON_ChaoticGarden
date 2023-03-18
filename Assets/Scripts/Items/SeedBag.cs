@@ -16,6 +16,7 @@ public class SeedBag : MonoBehaviour
                 if(collider.TryGetComponent<PlayerController>(out PlayerController playerController))
                 {
                     SeedController.Instance.RestockSeeds();
+                    SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.SamenbagCollect);
                     Destroy(gameObject);
                 }
             }

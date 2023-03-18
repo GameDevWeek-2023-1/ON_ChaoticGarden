@@ -28,6 +28,9 @@ public class WeatherController : MonoBehaviour
     [SerializeField] private ParticleSystem stormyWeatherWindParticleSystem;
     [SerializeField] private List<Weather> weatherList = new List<Weather>();
     [SerializeField] private MMF_Player Feel_Feedback_Lensdistortion;
+    [SerializeField] private Light sunLight;
+    [SerializeField] private float minSunLight;
+    [SerializeField] private float maxSunLight;
 
     public Weather _currentWeather;
     private float _changeWeatherTime;
@@ -125,28 +128,72 @@ public class WeatherController : MonoBehaviour
         switch (_currentWeather)
         {
             case Weather.Normal:
-                //normalWeatherParticleSystem.Play();
                 rainyWeatherParticleSystem.Stop();
                 stormyWeatherParticleSystem.Stop();
                 stormyWeatherWindParticleSystem.Stop();
+
+                FunctionTimer.Create(() =>
+                {
+                    sunLight.intensity -= Time.deltaTime;
+
+                    if (sunLight.intensity <= minSunLight)
+                    {
+                        sunLight.intensity = minSunLight;
+                    }
+
+                    return sunLight.intensity == minSunLight;
+                }, "", true);
                 break;
             case Weather.Rainy:
-                //normalWeatherParticleSystem.Stop();
                 rainyWeatherParticleSystem.Play();
                 stormyWeatherParticleSystem.Stop();
                 stormyWeatherWindParticleSystem.Stop();
+
+                FunctionTimer.Create(() =>
+                {
+                    sunLight.intensity -= Time.deltaTime;
+
+                    if (sunLight.intensity <= minSunLight)
+                    {
+                        sunLight.intensity = minSunLight;
+                    }
+
+                    return sunLight.intensity == minSunLight;
+                }, "", true);
                 break;
             case Weather.Stormy:
-                //normalWeatherParticleSystem.Stop();
                 rainyWeatherParticleSystem.Stop();
                 stormyWeatherParticleSystem.Play();
                 stormyWeatherWindParticleSystem.Play();
+
+                FunctionTimer.Create(() =>
+                {
+                    sunLight.intensity -= Time.deltaTime;
+
+                    if (sunLight.intensity <= minSunLight)
+                    {
+                        sunLight.intensity = minSunLight;
+                    }
+
+                    return sunLight.intensity == minSunLight;
+                }, "", true);
                 break;
             case Weather.Sunny:
-                //normalWeatherParticleSystem.Stop();
                 rainyWeatherParticleSystem.Stop();
                 stormyWeatherParticleSystem.Stop();
                 stormyWeatherWindParticleSystem.Stop();
+
+                FunctionTimer.Create(() =>
+                {
+                    sunLight.intensity += Time.deltaTime;
+
+                    if(sunLight.intensity >= maxSunLight)
+                    {
+                        sunLight.intensity = maxSunLight;
+                    }
+
+                    return sunLight.intensity == maxSunLight;
+                }, "", true);
                 break;
         }
     }

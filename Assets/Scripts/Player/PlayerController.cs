@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackingResetTime = .5f;
     [SerializeField] private float checkRadiusForHiding = 1f;
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float interactCheckradius;
 
     private float _playerRadius;
     private bool _isWalking;
@@ -27,8 +28,20 @@ public class PlayerController : MonoBehaviour
     {
         SeedController.Instance.OnSeedPlanted += SeedController_OnSeedPlanted;
         _playerInput.OnAttacked += PlayerInput_OnAttacked;
+        _playerInput.OnInteract += PlayerInput_OnInteract;
     }
+    private void PlayerInput_OnInteract(object sender, System.EventArgs e)
+    {
+        Collider[] interactableColliders = Physics.OverlapSphere(transform.position, interactCheckradius);
 
+        foreach (Collider collider in interactableColliders)
+        {
+            if(collider.TryGetComponent<IInteractable>(out IInteractable interactable))
+            {
+                interactable.Interact();
+            }
+        }
+    }
     private void SeedController_OnSeedPlanted(object sender, SeedController.OnSeedPlantedEventArgs e)
     {
         if (!e.canPlant) return;

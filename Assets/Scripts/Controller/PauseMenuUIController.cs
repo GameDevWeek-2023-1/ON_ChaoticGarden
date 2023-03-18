@@ -8,6 +8,7 @@ public class PauseMenuUIController : MonoBehaviour
     [SerializeField] private Transform restartGameSceneTranstion;
     [SerializeField] private Transform loadHomeSceneTransition;
     [SerializeField] private Animator pauseMenuUIAnimator;
+    [SerializeField] private MusicController musicController;
     private void Start()
     {
         GameStatesController.Instance.OnGamePaused += GameStatesController_OnGamePaused;
@@ -23,10 +24,20 @@ public class PauseMenuUIController : MonoBehaviour
     }
     public void RestartGameScene()
     {
-        restartGameSceneTranstion.gameObject.SetActive(true);
+        musicController.MusicFadeOut();
+        float delayTime = .3f;
+        FunctionTimer.Create(() =>
+        {
+            restartGameSceneTranstion.gameObject.SetActive(true);
+        }, delayTime);
     }
     public void LoadToHomeScene()
     {
-        loadHomeSceneTransition.gameObject.SetActive(true);
+        musicController.MusicFadeOut();
+        float delayTime = .3f;
+        FunctionTimer.Create(() =>
+        {
+            loadHomeSceneTransition.gameObject.SetActive(true);
+        }, delayTime);
     }
 }

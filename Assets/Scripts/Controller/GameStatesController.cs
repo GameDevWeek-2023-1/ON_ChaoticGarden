@@ -38,11 +38,13 @@ public class GameStatesController : MonoBehaviour
     {
         EndGame();
         winScreenTransform.gameObject.SetActive(true);
+        SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.PlayerWin);
     }
     private void HealthSystem_Player_OnDied(object sender, EventArgs e)
     {
         EndGame();
         looseScreenTransform.gameObject.SetActive(true);
+        SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.PlayerDied);
     }
     private void PlayerController_PlayerInput_OnPauseButtonPressed(object sender, System.EventArgs e)
     {
@@ -50,6 +52,7 @@ public class GameStatesController : MonoBehaviour
         OnGamePaused?.Invoke(this, EventArgs.Empty);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        SoundEffectsController.Instance.PlayOnShoot(SoundEffectsController.Sound.ClickMenuPoint);
     }
     public void BackToGame()
     {
